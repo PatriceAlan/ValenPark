@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="server-registry" />
         <module name="users" />
+        <module name="parkings" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="parkings" options="-parameters" />
       <module name="server-registry" options="-parameters" />
       <module name="users" options="-parameters" />
     </option>

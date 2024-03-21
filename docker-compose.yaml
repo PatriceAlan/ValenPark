@@ -1,16 +1,25 @@
-version: '3.9'
+version: '3.1'
 
 services:
   db:
-    image: mysql:8.0-oracle
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: valenpark
-
-  phpmyadmin:
-    image: phpmyadmin
+    image: postgres:15.4
     restart: always
     ports:
-      - "8000:80"
+      - "5432:5432"
     environment:
-      - PMA_ARBITRARY=1
+      POSTGRES_PASSWORD: valenpark
+      POSTGRES_DB: valenpark
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8000:8080"
+    volumes:
+      - adminer_data:/var/www/html
+
+volumes:
+  postgres_data:
+  adminer_data:
