@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.uphf</groupId>
-	<artifactId>users</artifactId>
+	<artifactId>user</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>users</name>
 	<description>ValenPark : votre compagnon de parking fiable et efficace</description>

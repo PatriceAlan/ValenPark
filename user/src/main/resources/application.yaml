@@ -6,10 +6,25 @@ spring:
     username: postgres
     password: valenpark
     driver-class-name: org.postgresql.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+    properties:
+      show-sql: true
+      use_sql_comments: true
+      format_sql: true
+
+  logging:
+    level:
+      org:
+        springframework:
+          web: DEBUG
+        hibernate:
+          SQL: DEBUG
+          type: TRACE
+
   eureka:
     client:
       serviceUrl:

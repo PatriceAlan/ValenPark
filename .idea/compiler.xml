@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,7 +10,7 @@
         <module name="server-registry" />
         <module name="paiements" />
         <module name="reservations" />
-        <module name="users" />
+        <module name="user" />
         <module name="parkings" />
       </profile>
     </annotationProcessing>
@@ -20,7 +21,7 @@
       <module name="parkings" options="-parameters" />
       <module name="reservations" options="-parameters" />
       <module name="server-registry" options="-parameters" />
-      <module name="users" options="-parameters" />
+      <module name="user" options="-parameters" />
     </option>
   </component>
 </project>
