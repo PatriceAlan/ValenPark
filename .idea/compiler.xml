@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="server-registry" />
+        <module name="paiements" />
+        <module name="reservations" />
         <module name="users" />
         <module name="parkings" />
       </profile>
@@ -14,7 +16,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="paiements" options="-parameters" />
       <module name="parkings" options="-parameters" />
+      <module name="reservations" options="-parameters" />
       <module name="server-registry" options="-parameters" />
       <module name="users" options="-parameters" />
     </option>
