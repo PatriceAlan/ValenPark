@@ -40,7 +40,7 @@ public class ReservationsController {
     // Cette méthode est utilisée pour mapper un objet Reservation vers un objet ReservationResponseDTO.
     private ReservationResponseDTO mapReservationToResponseDto(Reservations reservation) {
         return ReservationResponseDTO.builder()
-                .id(reservation.getId())
+                .id(reservation.getIdReservation())
                 .idUtilisateur(reservation.getIdUtilisateur())
                 .dateDebut(reservation.getDateDebut())
                 .dateFin(reservation.getDateFin())
@@ -48,7 +48,8 @@ public class ReservationsController {
                 .build();
     }
 
-    public Optional<Reservations> getReservationById(Long id) {
-        return reservationsRepository.findById(id);
+    @GetMapping("/{idReservation}")
+    public Optional<Reservations> getReservationById(@PathVariable  Long idReservation) {
+        return reservationsRepository.findById(idReservation);
     }
 }

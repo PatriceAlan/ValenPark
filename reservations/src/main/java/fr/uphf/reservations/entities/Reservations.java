@@ -15,7 +15,7 @@ public class Reservations {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idReservation;
 
     @Column(nullable = false)
     private Long idUtilisateur;
