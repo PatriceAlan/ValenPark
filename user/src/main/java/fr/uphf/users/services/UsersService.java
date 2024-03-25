@@ -46,7 +46,7 @@ public class UsersService {
     // Cette méthode est utilisée pour mapper un objet User vers un objet UserResponseDTO.
     public UserResponseDTO mapUserToResponseDto(Users user) {
         return UserResponseDTO.builder()
-                .id(user.getId())
+                .id(user.getIdUtilisateur())
                 .nom(user.getNom())
                 .prenom(user.getPrenom())
                 .email(user.getEmail())
