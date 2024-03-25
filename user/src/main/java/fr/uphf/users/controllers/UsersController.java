@@ -50,7 +50,7 @@ public class UsersController {
     //Cette méthode est utilisée pour mapper un objet User vers un objet UserResponseDTO.
     private UserResponseDTO mapUserToResponseDto(Users user) {
         return UserResponseDTO.builder()
-                .id(user.getIdUtilisateur())
+                .idUtilisateur(user.getIdUtilisateur())
                 .nom(user.getNom())
                 .prenom(user.getPrenom())
                 .email(user.getEmail())
