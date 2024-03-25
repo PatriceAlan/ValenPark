@@ -1,6 +1,6 @@
 # ValenPark 🅿️🚗
 
-![ValenPark](https://github.com/GeorgesMano/ValenPark/blob/main/ValenPark.png?raw=true)
+![ValenPark](https://github.com/PatriceAlan/ValenPark/blob/main/ValenPark.png?raw=true)
 
 ValenPark est un projet de gestion des parkings dans la ville de Valenciennes, visant à offrir une solution fiable et efficace pour faciliter le stationnement.
 

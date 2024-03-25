@@ -40,7 +40,7 @@ public class ReservationsController {
     // Cette méthode est utilisée pour mapper un objet Reservation vers un objet ReservationResponseDTO.
     private ReservationResponseDTO mapReservationToResponseDto(Reservations reservation) {
         return ReservationResponseDTO.builder()
-                .id(reservation.getId())
+                .id(reservation.getIdReservation())
                 .idUtilisateur(reservation.getIdUtilisateur())
                 .dateDebut(reservation.getDateDebut())
                 .dateFin(reservation.getDateFin())
