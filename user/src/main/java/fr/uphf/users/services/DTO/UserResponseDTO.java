@@ -13,6 +13,5 @@ public class UserResponseDTO {
     private String prenom;
     private String email;
     private String numeroTelephone;
-    private String motDePasse;
 
 }
