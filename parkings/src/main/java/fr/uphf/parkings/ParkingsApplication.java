@@ -1,4 +1,4 @@
-package fr.uphf.placeparking;
+package fr.uphf.parkings;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
