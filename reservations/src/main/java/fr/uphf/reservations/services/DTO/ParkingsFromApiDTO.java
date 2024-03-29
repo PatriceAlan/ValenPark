@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class ParkingsFromApiDTO {
     private int idParking;
     private String nomZoneParking;
-    private String AdresseParking;
+    private String adresseParking;
     private int capaciteParking;
 }

@@ -11,11 +11,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReservationResponseDTO {
 
-    private Long id;
+    private Long idReservation;
     private Long idUtilisateur;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
     private int placeDeParking;
+    private int idParking;
 
 
 }

@@ -43,7 +43,7 @@ public class ReservationsService {
         ParkingsFromApiDTO parkingsFromApiDTO = webClient.baseUrl("http://parkings/")
                 .build()
                 .get()
-                .uri("/api/parkings/" + reservationDTO.getPlaceDeParking())
+                .uri("/api/parkings/" + reservationDTO.getIdParking())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(ParkingsFromApiDTO.class)
@@ -58,10 +58,11 @@ public class ReservationsService {
         int randomParkingNumber = generateUniqueRandomParkingNumber(parkingCapacity);
 
         Reservations reservation = Reservations.builder()
-                .idUtilisateur(utilisateursFromApiDTO.getId())
+                .idUtilisateur(utilisateursFromApiDTO.getIdUtilisateur())
                 .dateDebut(reservationDTO.getDateDebut())
                 .dateFin(reservationDTO.getDateFin())
                 .placeDeParking(randomParkingNumber)
+                .idParking(reservationDTO.getIdParking())
                 .build();
         return reservationsRepository.save(reservation);
     }
@@ -75,11 +76,12 @@ public class ReservationsService {
     // Cette méthode est utilisée pour mapper un objet Reservation vers un objet ReservationResponseDTO.
     public ReservationResponseDTO mapReservationToResponseDto(Reservations reservation) {
         return ReservationResponseDTO.builder()
-                .id(reservation.getIdReservation())
+                .idReservation(reservation.getIdReservation())
                 .idUtilisateur(reservation.getIdUtilisateur())
                 .dateDebut(reservation.getDateDebut())
                 .dateFin(reservation.getDateFin())
                 .placeDeParking(reservation.getPlaceDeParking())
+                .idParking(reservation.getIdParking())
                 .build();
     }
 

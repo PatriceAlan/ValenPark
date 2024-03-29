@@ -29,5 +29,8 @@ public class Reservations {
     @Column(nullable = false)
     private int placeDeParking;
 
+    @Column(nullable = false)
+    private int idParking;
+
 
 }

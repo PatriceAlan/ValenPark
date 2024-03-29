@@ -26,7 +26,7 @@ public class ParkingsService {
     public Parking createOrUpdateParking(CreateOrUpdateParkingDTO parkingDTO) {
         Parking parking = Parking.builder()
                 .nomZoneParking(parkingDTO.getNomZoneParking())
-                .AdresseParking(parkingDTO.getAdresseParking())
+                .adresseParking(parkingDTO.getAdresseParking())
                 .capaciteParking(parkingDTO.getCapaciteParking())
                 .build();
         return parkingRepository.save(parking);

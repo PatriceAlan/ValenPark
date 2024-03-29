@@ -1,6 +1,5 @@
 package fr.uphf.reservations.services.DTO;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,13 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CreateOrUpdateReservationDTO {
 
-    @NotBlank
     private Long idUtilisateur;
-    @NotBlank
     private LocalDateTime dateDebut;
-    @NotBlank
     private LocalDateTime dateFin;
-    @NotBlank
     private int placeDeParking;
+    private int idParking;
 
 }

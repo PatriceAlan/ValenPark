@@ -23,7 +23,7 @@ public class Parking {
     private String nomZoneParking;
 
     @NotBlank
-    private String AdresseParking;
+    private String adresseParking;
 
     private int capaciteParking;
 }
