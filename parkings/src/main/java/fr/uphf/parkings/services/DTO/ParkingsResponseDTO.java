@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ParkingResponseDTO {
+public class ParkingsResponseDTO {
     private int idParking;
     private String nomZoneParking;
     private String AdresseParking;

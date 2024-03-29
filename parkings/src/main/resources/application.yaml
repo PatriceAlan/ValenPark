@@ -1,6 +1,6 @@
 spring:
   application:
-    name: placeparking
+    name: parkings
   datasource:
     url: jdbc:postgresql://localhost:5432/valenpark
     username: postgres

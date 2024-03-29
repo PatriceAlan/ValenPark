@@ -2,8 +2,8 @@ package fr.uphf.parkings.controllers;
 import fr.uphf.parkings.entities.Parking;
 import fr.uphf.parkings.repositories.ParkingRepository;
 import fr.uphf.parkings.services.DTO.CreateOrUpdateParkingDTO;
-import fr.uphf.parkings.services.DTO.ParkingResponseDTO;
-import fr.uphf.parkings.services.ParkingService;
+import fr.uphf.parkings.services.DTO.ParkingsResponseDTO;
+import fr.uphf.parkings.services.ParkingsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,54 +12,46 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/parking")
+@RequestMapping("/api/parkings")
 public class ParkingController {
 
-    private final ParkingService parkingService;
+    private final ParkingsService parkingsService;
     private final ParkingRepository parkingRepository;
-    public interface ParkingService {
-        List<ParkingResponseDTO> getAllParking();
 
-        Parking createOrUpdateParking(CreateOrUpdateParkingDTO parkingDTO);
-    }
 
-    public ParkingController(ParkingService parkingService, ParkingRepository parkingRepository) {
-        this.parkingService = parkingService;
+    public ParkingController(ParkingsService parkingsService, ParkingRepository parkingRepository) {
+        this.parkingsService = parkingsService;
         this.parkingRepository = parkingRepository;
     }
 
 
     @PostMapping
-    public ResponseEntity<ParkingResponseDTO> createParking(@RequestBody CreateOrUpdateParkingDTO parkingDTO) {
-        ParkingResponseDTO createdParking = mapParkingToResponseDTO(parkingService.createOrUpdateParking(parkingDTO));
+    public ResponseEntity<ParkingsResponseDTO> createParking(@RequestBody CreateOrUpdateParkingDTO parkingDTO) {
+        ParkingsResponseDTO createdParking = mapParkingToResponseDTO(parkingsService.createOrUpdateParking(parkingDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdParking);
     }
 
-    private ParkingResponseDTO mapParkingToResponseDTO(Parking orUpdateParking) {
-        return null;
-    }
-
     @GetMapping("/{idParking}")
-    public ResponseEntity<ParkingResponseDTO> getParkingById(@PathVariable int idParking) {
+    public ResponseEntity<ParkingsResponseDTO> getParkingById(@PathVariable int idParking) {
         Optional<Parking> parkingOptional = parkingRepository.findById(idParking);
         if (parkingOptional.isPresent()) {
             Parking parking = parkingOptional.get();
-           ParkingResponseDTO parkingResponseDTO = mapParkingToResponseDTO(parking);
-            return ResponseEntity.ok(parkingResponseDTO);
+            ParkingsResponseDTO parkingsResponseDTO = mapParkingToResponseDTO(parking);
+            return ResponseEntity.ok(parkingsResponseDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<ParkingResponseDTO>> getAllParking() {
-        List<ParkingResponseDTO> parking = parkingService.getAllParking();
-        return ResponseEntity.ok(parking);
+    public ResponseEntity<List<ParkingsResponseDTO>> getAllParkings() {
+        List<ParkingsResponseDTO> parkings = parkingsService.getAllParkings();
+        return ResponseEntity.ok(parkings);
     }
 
 
-    private ParkingResponseDTO mapParkingToResponseDto(Parking parking) {
-        return ParkingResponseDTO.builder()
+    private ParkingsResponseDTO mapParkingToResponseDTO(Parking parking) {
+        return ParkingsResponseDTO.builder()
                 .idParking(parking.getIdParking())
                 .nomZoneParking(parking.getNomZoneParking())
                 .AdresseParking(parking.getAdresseParking())

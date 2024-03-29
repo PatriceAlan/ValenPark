@@ -1,6 +1,5 @@
 package fr.uphf.parkings.services.DTO;
 
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -11,16 +10,14 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateOrUpdateParkingDTO {
 
-        @NotBlank
         private int idParking;
 
         @NotBlank
         private String nomZoneParking;
 
         @NotBlank
-        private String AdresseParking;
+        private String adresseParking;
 
-        @NotBlank
         private int capaciteParking;
 
     }
