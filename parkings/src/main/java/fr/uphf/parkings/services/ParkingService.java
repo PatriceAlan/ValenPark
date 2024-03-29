@@ -2,37 +2,55 @@ package fr.uphf.parkings.services;
 
 import fr.uphf.parkings.entities.Parking;
 import fr.uphf.parkings.repositories.ParkingRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import fr.uphf.parkings.services.DTO.CreateOrUpdateParkingDTO;
+import fr.uphf.parkings.services.DTO.ParkingResponseDTO;
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ParkingService {
-    private static final Logger logger = LoggerFactory.getLogger(ParkingService.class);
+
     private final ParkingRepository parkingRepository;
 
-    @Autowired
     public ParkingService(ParkingRepository parkingRepository) {
         this.parkingRepository = parkingRepository;
     }
-    public List<Parking> getAllParkings() {
-        return parkingRepository.findAll();
-    }
 
-    public Optional<Parking> getParkingById(int id) {
-        return parkingRepository.findById(id);
-    }
-
-    public Parking saveParking(Parking parking) {
-        logger.info("Saving parking: {}", parking);
+    @Transactional
+    public Parking createOrUpdateParking(CreateOrUpdateParkingDTO parkingDTO) {
+        Parking parking = Parking.builder()
+                .nomZoneParking(parkingDTO.getNomZoneParking())
+                .AdresseParking(parkingDTO.getAdresseParking())
+                .capaciteParking(parkingDTO.getCapaciteParking())
+                .build();
         return parkingRepository.save(parking);
     }
 
-    public void deleteParking(int id) {
-        parkingRepository.deleteById(id);
+    public Optional<Parking> getParkingById(int idParking) {
+        return parkingRepository.findByIdParking(idParking);
+    }
+
+    public List<ParkingResponseDTO> getAllParking() {
+        return parkingRepository.findAll().stream()
+                .map(this::mapParkingToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public ParkingResponseDTO mapParkingToResponseDTO(Parking parking) {
+        return ParkingResponseDTO.builder()
+                .idParking(parking.getIdParking())
+                .nomZoneParking(parking.getNomZoneParking())
+                .AdresseParking(parking.getAdresseParking())
+                .capaciteParking(parking.getCapaciteParking())
+                .build();
+    }
+
+    public List<ParkingResponseDTO> getAllParking() {
+        return null;
     }
 }

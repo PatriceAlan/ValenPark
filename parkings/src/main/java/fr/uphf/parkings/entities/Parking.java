@@ -6,10 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity(name = "Parking")
 @Getter
@@ -17,15 +14,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Transactional
+@Builder
 public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idParking;
-
     @NotBlank
     private String nomZoneParking;
 
-    @NotBlank
     private String AdresseParking;
 
     @NotBlank
