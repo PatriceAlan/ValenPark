@@ -31,4 +31,6 @@ spring:
         defaultZone: http://localhost:8761/eureka
 
 server:
+  servlet:
+    context-path: /parkings
   port: 8082

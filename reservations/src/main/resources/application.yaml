@@ -30,5 +30,8 @@ spring:
       serviceUrl:
         defaultZone: http://localhost:8761/eureka
 
+
 server:
+  servlet:
+    context-path: /reservations
   port: 8084
