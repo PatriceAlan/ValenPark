@@ -53,17 +53,23 @@ public class ReservationsService {
             throw new IllegalArgumentException("Utilisateur ou parking introuvable");
         }
 
-        // Génération aléatoire du numéro de place de parking et vérification de son unicité
-        int parkingCapacity = parkingsFromApiDTO.getCapaciteParking();
-        int randomParkingNumber = generateUniqueRandomParkingNumber(parkingCapacity);
+        int capaciteParking = parkingsFromApiDTO.getCapaciteParking();
+        int numeroPlaceDeParking = reservationDTO.getPlaceDeParking();
 
+        if (isParkingNumberTaken(numeroPlaceDeParking)) {
+            throw new IllegalArgumentException("Numéro de place de parking déjà pris");
+        }
+        if (isParkingFull(capaciteParking)) {
+            throw new IllegalArgumentException("Parking plein");
+        }
         Reservations reservation = Reservations.builder()
                 .idUtilisateur(utilisateursFromApiDTO.getIdUtilisateur())
                 .dateDebut(reservationDTO.getDateDebut())
                 .dateFin(reservationDTO.getDateFin())
-                .placeDeParking(randomParkingNumber)
+                .placeDeParking(numeroPlaceDeParking)
                 .idParking(reservationDTO.getIdParking())
                 .build();
+
         return reservationsRepository.save(reservation);
     }
 
@@ -85,19 +91,16 @@ public class ReservationsService {
                 .build();
     }
 
-    // Méthode pour générer un numéro de place de parking aléatoire unique
-    private int generateUniqueRandomParkingNumber(int capacity) {
-        Random random = new Random();
-        int randomParkingNumber;
-        do {
-            randomParkingNumber = random.nextInt(capacity) + 1;
-        } while (isParkingNumberTaken(randomParkingNumber));
-        return randomParkingNumber;
-    }
 
     // Méthode pour vérifier si un numéro de place de parking est déjà pris
     private boolean isParkingNumberTaken(int parkingNumber) {
         Optional<Reservations> existingReservation = reservationsRepository.findByPlaceDeParking(parkingNumber);
         return existingReservation.isPresent();
+    }
+
+    // Méthode pour verifier si le parking est plein
+    private boolean isParkingFull(int parkingCapacity) {
+        List<Reservations> reservations = reservationsRepository.findAll();
+        return reservations.size() >= parkingCapacity;
     }
 }
