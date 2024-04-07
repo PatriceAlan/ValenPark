@@ -7,6 +7,8 @@ import fr.uphf.reservations.services.DTO.ParkingsFromApiDTO;
 import fr.uphf.reservations.services.DTO.ReservationResponseDTO;
 import fr.uphf.reservations.services.DTO.UtilisateursFromApiDTO;
 import jakarta.transaction.Transactional;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +23,9 @@ public class ReservationsService {
 
     @Autowired
     private WebClient.Builder webClient;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     private final ReservationsRepository reservationsRepository;
 
@@ -70,7 +74,12 @@ public class ReservationsService {
                 .idParking(reservationDTO.getIdParking())
                 .build();
 
-        return reservationsRepository.save(reservation);
+        Reservations savedReservation = reservationsRepository.save(reservation);
+
+        // Envoyer un message dans RabbitMQ avec les détails de la réservation
+        rabbitTemplate.convertAndSend("Confirmation de la reservation", "reservation_queue", savedReservation.getIdReservation());
+
+        return savedReservation;
     }
 
     public List<ReservationResponseDTO> getAllReservations() {
@@ -102,5 +111,10 @@ public class ReservationsService {
     private boolean isParkingFull(int parkingCapacity) {
         List<Reservations> reservations = reservationsRepository.findAll();
         return reservations.size() >= parkingCapacity;
+    }
+
+    @RabbitListener(queues = "paiement_queue")
+    public void receivePaiementConfirmationMessage(Long idPaiement) {
+        System.out.println("Confirmation pour la réservation " + idPaiement);
     }
 }

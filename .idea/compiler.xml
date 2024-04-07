@@ -7,20 +7,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="server-registry" />
         <module name="paiements" />
         <module name="reservations" />
-        <module name="user" />
         <module name="parkings" />
+        <module name="server-registry" />
+        <module name="user" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="rabbitmq" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gateway" options="-parameters" />
       <module name="paiements" options="-parameters" />
       <module name="parkings" options="-parameters" />
+      <module name="rabbitmq" options="-parameters" />
       <module name="reservations" options="-parameters" />
       <module name="server-registry" options="-parameters" />
       <module name="user" options="-parameters" />
