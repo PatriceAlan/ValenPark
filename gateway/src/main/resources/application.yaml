@@ -16,9 +16,18 @@ spring:
           uri: lb://parkings
           predicates:
             - Path=/parkings/**
-logging:
-  level:
-    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: TRACE
+  auth0:
+    audience: http://localhost:8085
+
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          issuer-uri: https://dev-m52jv12hskfqnedt.us.auth0.com/
 
 server:
   port: 8085
+
+logging:
+  level:
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: TRACE

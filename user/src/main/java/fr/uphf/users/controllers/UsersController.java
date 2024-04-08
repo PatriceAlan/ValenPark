@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/users")
 public class UsersController {
 
     private final UsersService usersService;
@@ -22,6 +23,7 @@ public class UsersController {
         this.usersService = usersService;
         this.usersRepository = usersRepository;
     }
+
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody CreateOrUpdateUserDTO userDto) {
         UserResponseDTO createdUser = mapUserToResponseDto(usersService.createOrUpdateUser(userDto));

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/reservations")
 public class ReservationsController {
 
     private final ReservationsService reservationsService;

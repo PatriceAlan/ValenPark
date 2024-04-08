@@ -32,6 +32,4 @@ spring:
 
 
 server:
-  servlet:
-    context-path: /reservations
   port: 8084
