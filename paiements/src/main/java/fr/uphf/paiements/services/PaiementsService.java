@@ -37,7 +37,7 @@ public class PaiementsService {
         ReservationsFromApiDTO reservationsFromApiDTO = webClient.baseUrl("http://reservations/")
                 .build()
                 .get()
-                .uri("/api/reservations/" + paiementsDTO.getIdReservation())
+                .uri("/reservations/" + paiementsDTO.getIdReservation())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(ReservationsFromApiDTO.class)

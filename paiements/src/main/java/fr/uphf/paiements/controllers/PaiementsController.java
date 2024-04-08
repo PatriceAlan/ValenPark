@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/paiements")
 public class PaiementsController {
 
     private final PaiementsService paiementsService;
