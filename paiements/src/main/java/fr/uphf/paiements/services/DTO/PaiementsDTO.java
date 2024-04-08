@@ -1,28 +1,20 @@
-package fr.uphf.paiements.entities;
+package fr.uphf.paiements.services.DTO;
 
-import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
-@Entity
+
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Paiements {
+public class PaiementsDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaiement;
-
-    @Column(nullable = false)
     private Long idReservation;
-
-    @Column(nullable = false)
     private int montantPaiement;
-
     private LocalDateTime datePaiement;
-
 
 }

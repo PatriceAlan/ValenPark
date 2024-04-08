@@ -30,5 +30,13 @@ spring:
       serviceUrl:
         defaultZone: http://localhost:8761/eureka
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 server:
+  servlet:
+    context-path: /paiements
   port: 8083
