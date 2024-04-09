@@ -68,6 +68,7 @@ public class ParkingController {
                 .nomZoneParking(parking.getNomZoneParking())
                 .AdresseParking(parking.getAdresseParking())
                 .capaciteParking(parking.getCapaciteParking())
+                .tarifHoraire(parking.getTarifHoraire())
                 .build();
     }
 

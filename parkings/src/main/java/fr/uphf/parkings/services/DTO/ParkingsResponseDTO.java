@@ -13,6 +13,7 @@ public class ParkingsResponseDTO {
     private String nomZoneParking;
     private String AdresseParking;
     private int capaciteParking;
+    private double tarifHoraire;
 }
 
 

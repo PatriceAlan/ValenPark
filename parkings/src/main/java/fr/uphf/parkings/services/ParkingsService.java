@@ -29,6 +29,7 @@ public class ParkingsService {
                 .nomZoneParking(parkingDTO.getNomZoneParking())
                 .adresseParking(parkingDTO.getAdresseParking())
                 .capaciteParking(parkingDTO.getCapaciteParking())
+                .tarifHoraire(parkingDTO.getTarifHoraire())
                 .build();
         return parkingRepository.save(parking);
     }
@@ -42,6 +43,7 @@ public class ParkingsService {
             parking.setNomZoneParking(parkingDTO.getNomZoneParking());
             parking.setAdresseParking(parkingDTO.getAdresseParking());
             parking.setCapaciteParking(parkingDTO.getCapaciteParking());
+            parking.setTarifHoraire(parkingDTO.getTarifHoraire());
             return parkingRepository.save(parking);
         } else {
             return null;
@@ -66,6 +68,7 @@ public class ParkingsService {
                 .nomZoneParking(parking.getNomZoneParking())
                 .AdresseParking(parking.getAdresseParking())
                 .capaciteParking(parking.getCapaciteParking())
+                .tarifHoraire(parking.getTarifHoraire())
                 .build();
     }
 
