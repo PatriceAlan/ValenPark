@@ -12,9 +12,10 @@ import java.time.LocalDateTime;
 public class CreateOrUpdateReservationDTO {
 
     private Long idUtilisateur;
+    private String immatriculationVehicule;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
     private int placeDeParking;
-    private int idParking;
+    private Long idParking;
 
 }

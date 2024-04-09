@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ParkingsFromApiDTO {
-    private int idParking;
+    private Long idParking;
     private String nomZoneParking;
     private String adresseParking;
     private int capaciteParking;

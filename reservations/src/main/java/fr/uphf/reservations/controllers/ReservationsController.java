@@ -53,6 +53,7 @@ public class ReservationsController {
         return ReservationResponseDTO.builder()
                 .idReservation(reservation.getIdReservation())
                 .idUtilisateur(reservation.getIdUtilisateur())
+                .immatriculationVehicule(reservation.getImmatriculationVehicule())
                 .dateDebut(reservation.getDateDebut())
                 .dateFin(reservation.getDateFin())
                 .placeDeParking(reservation.getPlaceDeParking())

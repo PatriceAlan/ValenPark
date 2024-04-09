@@ -6,7 +6,6 @@ import fr.uphf.reservations.services.DTO.CreateOrUpdateReservationDTO;
 import fr.uphf.reservations.services.DTO.ParkingsFromApiDTO;
 import fr.uphf.reservations.services.DTO.ReservationResponseDTO;
 import fr.uphf.reservations.services.DTO.UtilisateursFromApiDTO;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -83,27 +82,6 @@ public class ReservationsService {
         return savedReservation;
     }
 
-    public void deleteReservation(Long idReservation) {
-        reservationsRepository.deleteById(idReservation);
-    }
-
-    public Reservations updateReservation(Long idReservation, CreateOrUpdateReservationDTO reservationDTO) {
-        Optional<Reservations> reservationOptional = Optional.ofNullable(reservationsRepository.findById(idReservation)
-                .orElseThrow(() -> new EntityNotFoundException("Réservation non trouvée")));
-        if (reservationOptional.isPresent()) {
-            Reservations reservation = reservationOptional.get();
-            reservation.setIdUtilisateur(reservationDTO.getIdUtilisateur());
-            reservation.setDateDebut(reservationDTO.getDateDebut());
-            reservation.setDateFin(reservationDTO.getDateFin());
-            reservation.setPlaceDeParking(reservationDTO.getPlaceDeParking());
-            reservation.setIdParking(reservationDTO.getIdParking());
-            return reservationsRepository.save(reservation);
-        } else {
-            return null;
-        }
-
-    }
-
     public List<ReservationResponseDTO> getAllReservations() {
         return reservationsRepository.findAll().stream()
                 .map(this::mapReservationToResponseDto)
@@ -122,6 +100,9 @@ public class ReservationsService {
                 .build();
     }
 
+    public void deleteReservation(Long idReservation) {
+        reservationsRepository.deleteById(idReservation);
+    }
 
     // Méthode pour vérifier si un numéro de place de parking est déjà pris
     private boolean isParkingNumberTaken(int parkingNumber) {
@@ -138,5 +119,20 @@ public class ReservationsService {
     @RabbitListener(queues = "paiement_queue")
     public void receivePaiementConfirmationMessage(Long idPaiement) {
         System.out.println("Confirmation pour la réservation " + idPaiement);
+    }
+
+
+    public Reservations updateReservation(Long idReservation, CreateOrUpdateReservationDTO reservationDTO) {
+        Reservations reservation = reservationsRepository.findById(idReservation)
+                .orElseThrow(() -> new IllegalArgumentException("Réservation introuvable"));
+
+        reservation.setIdUtilisateur(reservationDTO.getIdUtilisateur());
+        reservation.setImmatriculationVehicule(reservationDTO.getImmatriculationVehicule());
+        reservation.setDateDebut(reservationDTO.getDateDebut());
+        reservation.setDateFin(reservationDTO.getDateFin());
+        reservation.setPlaceDeParking(reservationDTO.getPlaceDeParking());
+        reservation.setIdParking(reservationDTO.getIdParking());
+
+        return reservationsRepository.save(reservation);
     }
 }

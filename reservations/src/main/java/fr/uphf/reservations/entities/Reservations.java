@@ -21,6 +21,9 @@ public class Reservations {
     private Long idUtilisateur;
 
     @Column(nullable = false)
+    private String immatriculationVehicule;
+
+    @Column(nullable = false)
     private LocalDateTime dateDebut;
 
     @Column(nullable = false)
@@ -30,7 +33,7 @@ public class Reservations {
     private int placeDeParking;
 
     @Column(nullable = false)
-    private int idParking;
+    private Long idParking;
 
 
 }
