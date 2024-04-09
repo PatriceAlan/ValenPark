@@ -6,6 +6,7 @@ import fr.uphf.reservations.services.DTO.CreateOrUpdateReservationDTO;
 import fr.uphf.reservations.services.DTO.ParkingsFromApiDTO;
 import fr.uphf.reservations.services.DTO.ReservationResponseDTO;
 import fr.uphf.reservations.services.DTO.UtilisateursFromApiDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -34,7 +35,7 @@ public class ReservationsService {
     }
 
     @Transactional
-    public Reservations createOrUpdateReservation(CreateOrUpdateReservationDTO reservationDTO) {
+    public Reservations createReservation(CreateOrUpdateReservationDTO reservationDTO) {
         UtilisateursFromApiDTO utilisateursFromApiDTO = webClient.baseUrl("http://users/")
                 .build()
                 .get()
@@ -80,6 +81,27 @@ public class ReservationsService {
         rabbitTemplate.convertAndSend("Confirmation de la reservation", "reservation_queue", savedReservation.getIdReservation());
 
         return savedReservation;
+    }
+
+    public void deleteReservation(Long idReservation) {
+        reservationsRepository.deleteById(idReservation);
+    }
+
+    public Reservations updateReservation(Long idReservation, CreateOrUpdateReservationDTO reservationDTO) {
+        Optional<Reservations> reservationOptional = Optional.ofNullable(reservationsRepository.findById(idReservation)
+                .orElseThrow(() -> new EntityNotFoundException("Réservation non trouvée")));
+        if (reservationOptional.isPresent()) {
+            Reservations reservation = reservationOptional.get();
+            reservation.setIdUtilisateur(reservationDTO.getIdUtilisateur());
+            reservation.setDateDebut(reservationDTO.getDateDebut());
+            reservation.setDateFin(reservationDTO.getDateFin());
+            reservation.setPlaceDeParking(reservationDTO.getPlaceDeParking());
+            reservation.setIdParking(reservationDTO.getIdParking());
+            return reservationsRepository.save(reservation);
+        } else {
+            return null;
+        }
+
     }
 
     public List<ReservationResponseDTO> getAllReservations() {

@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateOrUpdateParkingDTO {
 
-        private int idParking;
+        private Long idParking;
 
         @NotBlank
         private String nomZoneParking;

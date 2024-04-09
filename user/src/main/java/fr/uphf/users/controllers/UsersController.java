@@ -25,14 +25,14 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody CreateOrUpdateUserDTO userDto) {
-        UserResponseDTO createdUser = mapUserToResponseDto(usersService.createOrUpdateUser(userDto));
+    public ResponseEntity<UserResponseDTO> createOrUpdateUser(@RequestBody CreateOrUpdateUserDTO userDto) {
+        UserResponseDTO createdUser = mapUserToResponseDto(usersService.CreateUser(userDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
-        Optional<Users> userOptional = usersRepository.findById(id);
+    @GetMapping("/{idUtilisateur}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long idUtilisateur) {
+        Optional<Users> userOptional = usersRepository.findById(idUtilisateur);
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
             UserResponseDTO userResponseDTO = mapUserToResponseDto(user);
@@ -57,5 +57,17 @@ public class UsersController {
                 .email(user.getEmail())
                 .numeroTelephone(user.getNumeroTelephone())
                 .build();
+    }
+
+    @DeleteMapping("/{idUtilisateur}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long idUtilisateur) {
+        usersService.deleteUser(idUtilisateur);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{idUtilisateur}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long idUtilisateur, @RequestBody CreateOrUpdateUserDTO userDto) {
+        UserResponseDTO updatedUser = mapUserToResponseDto(usersService.updateUser(idUtilisateur, userDto));
+        return ResponseEntity.ok(updatedUser);
     }
 }

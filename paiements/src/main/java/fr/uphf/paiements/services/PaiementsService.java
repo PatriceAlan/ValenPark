@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +34,7 @@ public class PaiementsService {
         System.out.println("Confirmation pour la réservation " + idReservation);
     }
 
-    public Paiements createOrUpdatePaiement(PaiementsDTO paiementsDTO) {
+    public Paiements createPaiement(PaiementsDTO paiementsDTO) {
         ReservationsFromApiDTO reservationsFromApiDTO = webClient.baseUrl("http://reservations/")
                 .build()
                 .get()
@@ -59,10 +60,28 @@ public class PaiementsService {
         return paiementsSaved;
     }
 
+    public Paiements updatePaiement(Long idPaiement, PaiementsDTO paiementsDTO) {
+          Optional<Paiements> paiementsOptional = Optional.ofNullable(paiementsRepository.findById(idPaiement)
+                  .orElseThrow(() -> new IllegalArgumentException("Paiement introuvable")));
+        if (paiementsOptional.isPresent()) {
+            Paiements paiements = paiementsOptional.get();
+            paiements.setIdReservation(paiementsDTO.getIdReservation());
+            paiements.setMontantPaiement(paiementsDTO.getMontantPaiement());
+            paiements.setDatePaiement(paiementsDTO.getDatePaiement());
+            return paiementsRepository.save(paiements);
+        } else {
+            return null;
+        }
+    }
+
     public List<PaiementsDTO> getAllPaiements() {
         return paiementsRepository.findAll().stream()
                 .map(this::mapPaiementsToPaiementsDTO)
                 .collect(Collectors.toList());
+    }
+
+    public void deletePaiement(Long idPaiement) {
+        paiementsRepository.deleteById(idPaiement);
     }
 
     // Cette méthode permet de convertir un objet Paiements en un objet PaiementsDTO

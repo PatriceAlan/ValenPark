@@ -26,8 +26,20 @@ public class ReservationsController {
 
     @PostMapping
     public ResponseEntity<ReservationResponseDTO> createReservation(@RequestBody CreateOrUpdateReservationDTO reservationDTO) {
-        ReservationResponseDTO createdReservation = mapReservationToResponseDto(reservationsService.createOrUpdateReservation(reservationDTO));
+        ReservationResponseDTO createdReservation = mapReservationToResponseDto(reservationsService.createReservation(reservationDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
+    }
+
+    @PutMapping("/{idReservation}")
+    public ResponseEntity<ReservationResponseDTO> updateReservation(@PathVariable Long idReservation, @RequestBody CreateOrUpdateReservationDTO reservationDTO) {
+        ReservationResponseDTO updatedReservation = mapReservationToResponseDto(reservationsService.updateReservation(idReservation, reservationDTO));
+        return ResponseEntity.ok(updatedReservation);
+    }
+
+    @DeleteMapping("/{idReservation}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long idReservation) {
+        reservationsService.deleteReservation(idReservation);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
@@ -35,7 +47,6 @@ public class ReservationsController {
         List<ReservationResponseDTO> reservations = reservationsService.getAllReservations();
         return ResponseEntity.ok(reservations);
     }
-
 
     // Cette méthode est utilisée pour mapper un objet Reservation vers un objet ReservationResponseDTO.
     private ReservationResponseDTO mapReservationToResponseDto(Reservations reservation) {

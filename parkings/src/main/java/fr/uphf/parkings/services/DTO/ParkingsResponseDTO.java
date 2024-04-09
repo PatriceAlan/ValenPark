@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 public class ParkingsResponseDTO {
-    private int idParking;
+    private Long idParking;
     private String nomZoneParking;
     private String AdresseParking;
     private int capaciteParking;
