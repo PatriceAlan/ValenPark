@@ -4,6 +4,7 @@ import fr.uphf.parkings.entities.Parking;
 import fr.uphf.parkings.repositories.ParkingRepository;
 import fr.uphf.parkings.services.DTO.CreateOrUpdateParkingDTO;
 import fr.uphf.parkings.services.DTO.ParkingsResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ParkingsService {
     }
 
     @Transactional
-    public Parking createOrUpdateParking(CreateOrUpdateParkingDTO parkingDTO) {
+    public Parking createParking(CreateOrUpdateParkingDTO parkingDTO) {
         Parking parking = Parking.builder()
                 .nomZoneParking(parkingDTO.getNomZoneParking())
                 .adresseParking(parkingDTO.getAdresseParking())
@@ -32,8 +33,23 @@ public class ParkingsService {
         return parkingRepository.save(parking);
     }
 
-    public Optional<Parking> getParkingById(int idParking) {
-        return parkingRepository.findByIdParking(idParking);
+    @Transactional
+    public Parking updateParking(Long idParking, CreateOrUpdateParkingDTO parkingDTO) {
+        Optional<Parking> parkingOptional = Optional.ofNullable(parkingRepository.findById(idParking)
+                .orElseThrow(() -> new EntityNotFoundException("Parking non trouvé")));
+        if (parkingOptional.isPresent()) {
+            Parking parking = parkingOptional.get();
+            parking.setNomZoneParking(parkingDTO.getNomZoneParking());
+            parking.setAdresseParking(parkingDTO.getAdresseParking());
+            parking.setCapaciteParking(parkingDTO.getCapaciteParking());
+            return parkingRepository.save(parking);
+        } else {
+            return null;
+        }
+    }
+
+    public void deleteParking(Long idParking) {
+        parkingRepository.deleteById(idParking);
     }
 
     @GetMapping

@@ -27,12 +27,12 @@ public class ParkingController {
 
     @PostMapping
     public ResponseEntity<ParkingsResponseDTO> createParking(@RequestBody CreateOrUpdateParkingDTO parkingDTO) {
-        ParkingsResponseDTO createdParking = mapParkingToResponseDTO(parkingsService.createOrUpdateParking(parkingDTO));
+        ParkingsResponseDTO createdParking = mapParkingToResponseDTO(parkingsService.createParking(parkingDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdParking);
     }
 
     @GetMapping("/{idParking}")
-    public ResponseEntity<ParkingsResponseDTO> getParkingById(@PathVariable int idParking) {
+    public ResponseEntity<ParkingsResponseDTO> getParkingById(@PathVariable Long idParking) {
         Optional<Parking> parkingOptional = parkingRepository.findById(idParking);
         if (parkingOptional.isPresent()) {
             Parking parking = parkingOptional.get();
@@ -47,6 +47,18 @@ public class ParkingController {
     public ResponseEntity<List<ParkingsResponseDTO>> getAllParkings() {
         List<ParkingsResponseDTO> parkings = parkingsService.getAllParkings();
         return ResponseEntity.ok(parkings);
+    }
+
+    @PutMapping("/{idParking}")
+    public ResponseEntity<ParkingsResponseDTO> updateParking(@PathVariable Long idParking, @RequestBody CreateOrUpdateParkingDTO parkingDTO) {
+        ParkingsResponseDTO updatedParking = mapParkingToResponseDTO(parkingsService.updateParking(idParking, parkingDTO));
+        return ResponseEntity.ok(updatedParking);
+    }
+
+    @DeleteMapping("/{idParking}")
+    public ResponseEntity<Void> deleteParkingById(@PathVariable Long idParking) {
+        parkingsService.deleteParking(idParking);
+        return ResponseEntity.noContent().build();
     }
 
 

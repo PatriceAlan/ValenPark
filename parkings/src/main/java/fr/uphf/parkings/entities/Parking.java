@@ -17,7 +17,7 @@ import lombok.*;
 public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idParking;
+    private Long idParking;
 
     @NotBlank
     private String nomZoneParking;

@@ -24,9 +24,21 @@ public class PaiementsController {
 
     @PostMapping
     public ResponseEntity<PaiementsDTO> createPaiement(@RequestBody PaiementsDTO paiementDTO) {
-        PaiementsDTO createdPaiement = mapPaiementToResponseDto(paiementsService.createOrUpdatePaiement(paiementDTO));
+        PaiementsDTO createdPaiement = mapPaiementToResponseDto(paiementsService.createPaiement(paiementDTO));
         return ResponseEntity.ok(createdPaiement);
 
+    }
+
+    @PutMapping("/{idPaiement}")
+    public ResponseEntity<PaiementsDTO> updatePaiement(@PathVariable Long idPaiement, @RequestBody PaiementsDTO paiementDTO) {
+        PaiementsDTO updatedPaiement = mapPaiementToResponseDto(paiementsService.updatePaiement(idPaiement, paiementDTO));
+        return ResponseEntity.ok(updatedPaiement);
+    }
+
+    @DeleteMapping("/{idPaiement}")
+    public ResponseEntity<Void> deletePaiement(@PathVariable Long idPaiement) {
+        paiementsService.deletePaiement(idPaiement);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping

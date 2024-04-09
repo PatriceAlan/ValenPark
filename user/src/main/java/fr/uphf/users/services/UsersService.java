@@ -5,6 +5,7 @@ import fr.uphf.users.repositories.UsersRepository;
 
 import fr.uphf.users.services.DTO.CreateOrUpdateUserDTO;
 import fr.uphf.users.services.DTO.UserResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class UsersService {
     }
 
     @Transactional
-    public Users createOrUpdateUser(CreateOrUpdateUserDTO userDTO) {
+    public Users CreateUser(CreateOrUpdateUserDTO userDTO) {
         Users user = Users.builder()
                 .nom(userDTO.getNom())
                 .prenom(userDTO.getPrenom())
@@ -33,8 +34,21 @@ public class UsersService {
         return usersRepository.save(user);
     }
 
-    public Optional<Users> getUserById(Long id) {
-        return usersRepository.findById(id);
+    @Transactional
+    public Users updateUser(Long idUtilisateur, CreateOrUpdateUserDTO userDTO) {
+        Optional<Users> userOptional = Optional.ofNullable(usersRepository.findById(idUtilisateur)
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé")));
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            user.setNom(userDTO.getNom());
+            user.setPrenom(userDTO.getPrenom());
+            user.setEmail(userDTO.getEmail());
+            user.setNumeroTelephone(userDTO.getNumeroTelephone());
+            user.setMotDePasse(userDTO.getMotDePasse());
+            return usersRepository.save(user);
+        } else {
+            return null;
+        }
     }
 
     public List<UserResponseDTO> getAllUsers() {
@@ -52,6 +66,10 @@ public class UsersService {
                 .email(user.getEmail())
                 .numeroTelephone(user.getNumeroTelephone())
                 .build();
+    }
+
+    public void deleteUser(Long idUtilisateur) {
+        usersRepository.deleteById(idUtilisateur);
     }
 
 }
