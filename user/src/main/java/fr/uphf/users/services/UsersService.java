@@ -22,8 +22,12 @@ public class UsersService {
         this.usersRepository = usersRepository;
     }
 
+    public Users loginUser(String email, String motDePasse) {
+        return usersRepository.findByEmailAndMotDePasse(email, motDePasse);
+    }
+
     @Transactional
-    public Users CreateUser(CreateOrUpdateUserDTO userDTO) {
+    public Users createUser(CreateOrUpdateUserDTO userDTO) {
         Users user = Users.builder()
                 .nom(userDTO.getNom())
                 .prenom(userDTO.getPrenom())
