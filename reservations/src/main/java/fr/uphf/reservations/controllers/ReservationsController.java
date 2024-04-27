@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/reservations")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ReservationsController {
 
     private final ReservationsService reservationsService;
