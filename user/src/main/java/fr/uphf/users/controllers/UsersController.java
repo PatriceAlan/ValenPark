@@ -29,6 +29,7 @@ public class UsersController {
     }
 
     @GetMapping("/connexion")
+    @CrossOrigin(origins = "http://localhost:5173")
     public ResponseEntity<?> loginUser(@RequestParam String email, @RequestParam String motDePasse, HttpServletRequest request) {
         Users user = usersService.loginUser(email, motDePasse);
         if (user != null) {
